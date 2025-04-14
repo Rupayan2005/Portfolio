@@ -4,51 +4,45 @@ import { motion } from "framer-motion";
 
 export function ColourfulText({ text }: { text: string }) {
   const colors = [
-    "rgb(131, 179, 32)",
-    "rgb(47, 195, 106)",
-    "rgb(42, 169, 210)",
-    "rgb(4, 112, 202)",
-    "rgb(107, 10, 255)",
-    "rgb(183, 0, 218)",
-    "rgb(218, 0, 171)",
-    "rgb(230, 64, 92)",
-    "rgb(232, 98, 63)",
-    "rgb(249, 129, 47)",
+    "rgb(24, 30, 66)",     
+    "rgb(52, 70, 139)",    
+    "rgb(78, 85, 210)",    
+    "rgb(118, 73, 225)",   
+    "rgb(58, 52, 191)",    
+    "rgb(89, 30, 197)",    
+    "rgb(45, 38, 140)",    
+    "rgb(60, 20, 130)",    
+    "rgb(183, 195, 215)",  
+    "rgb(20, 30, 50)",
   ];
 
-  const [currentColors, setCurrentColors] = React.useState(colors);
-  const [count, setCount] = React.useState(0);
+  return text.split("").map((char, index) => {
+    const shadowColor = colors[index % colors.length];
 
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      const shuffled = [...colors].sort(() => Math.random() - 0.5);
-      setCurrentColors(shuffled);
-      setCount((prev) => prev + 1);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  return text.split("").map((char, index) => (
-    <motion.span
-      key={`${char}-${count}-${index}`}
-      initial={{
-        y: 0,
-      }}
-      animate={{
-        color: currentColors[index % currentColors.length],
-        y: [0, -3, 0],
-        scale: [1, 1.01, 1],
-        filter: ["blur(0px)", `blur(5px)`, "blur(0px)"],
-        opacity: [1, 0.8, 1],
-      }}
-      transition={{
-        duration: 0.5,
-        delay: index * 0.05,
-      }}
-      className="inline-block whitespace-pre font-sans tracking-tight"
-    >
-      {char}
-    </motion.span>
-  ));
+    return (
+      <motion.span
+        key={`${char}-${index}`}
+        initial={{ opacity: 0, y: 5 }}
+        animate={{
+          color: "#ffffff", // Main text remains white
+          opacity: 1,
+          y: [0, -2, 0],
+          filter: [
+            `drop-shadow(0 0 0px ${shadowColor})`,
+            `drop-shadow(0 0 6px ${shadowColor})`,
+            `drop-shadow(0 0 0px ${shadowColor})`
+          ]
+        }}
+        transition={{
+          duration: 1,
+          delay: index * 0.04,
+          repeat: Infinity,
+          repeatType: "reverse"
+        }}
+        className="inline-block whitespace-pre font-sans tracking-tight"
+      >
+        {char}
+      </motion.span>
+    );
+  });
 }

@@ -192,67 +192,44 @@ export default function Skills() {
           <motion.div variants={containerVariants} className="grid grid-cols-3 md:grid-cols-6 gap-6">
             {["React", "Next.js", "TypeScript", "Tailwind CSS", "Scikit-Learn", "C++"].map((tech, index) => (
               <motion.div
-                key={tech}
-                variants={itemVariants}
-                whileHover={{
-                  y: -10,
-                  boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-                }}
-                className="relative backdrop-blur-md bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-6 flex items-center justify-center aspect-square transition-all duration-300 border border-white/10 overflow-hidden group"
-              >
-                {/* Glow effect */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 blur-xl"></div>
-                </div>
-
-                <motion.span
-                  className="text-blue-400 absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  initial={{ rotate: 0 }}
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.5 }}
-                  style={{ left: "25%", top: "25%" }}
+              key={tech}
+              variants={itemVariants}
+              whileHover={{
+                scale: 1.05,
+                y: -5,
+                transition: { duration: 0.2 },
+              }}
+              className="relative group"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-xl blur-xl transform group-hover:scale-110 transition-transform duration-300" />
+              
+              <div className="relative bg-black/20 backdrop-blur-lg border border-white/10 rounded-xl p-6 h-full flex items-center justify-center overflow-hidden">
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  animate={{
+                    background: [
+                      "radial-gradient(circle at 0% 0%, rgba(147, 51, 234, 0.1) 0%, transparent 50%)",
+                      "radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)",
+                      "radial-gradient(circle at 0% 0%, rgba(147, 51, 234, 0.1) 0%, transparent 50%)",
+                    ],
+                  }}
+                  transition={{
+                    duration: 5,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                />
+    
+                <motion.span 
+                  className="font-medium text-white/90 text-center z-10"
+                  whileHover={{
+                    textShadow: "0 0 8px rgba(255,255,255,0.5)",
+                  }}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <polyline points="16 18 22 12 16 6"></polyline>
-                  </svg>
-                </motion.span>
-
-                <motion.span
-                  className="text-purple-400 absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  initial={{ rotate: 0 }}
-                  whileHover={{ rotate: -360 }}
-                  transition={{ duration: 0.5 }}
-                  style={{ right: "25%", bottom: "25%" }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <polyline points="8 6 2 12 8 18"></polyline>
-                  </svg>
-                </motion.span>
-
-                <span className="relative font-medium text-center z-10 group-hover:text-white transition-all duration-300">
                   {tech}
-                </span>
-              </motion.div>
+                </motion.span>
+              </div>
+            </motion.div>
             ))}
           </motion.div>
         </motion.div>

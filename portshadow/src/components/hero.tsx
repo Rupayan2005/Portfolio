@@ -95,18 +95,18 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
         >
-          <Button
-            size="lg"
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-black hover:to-blue-600 text-white border-none"
+          <a
+            href="#projects"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-black hover:to-blue-600 text-white border-none px-6 py-3 rounded-lg text-md text-center"
           >
             View My Work
-          </Button>
-          <Button
-            size="lg"
-            className="bg-gradient-to-r from-black to-blue-600 hover:from-blue-700 hover:to-purple-700 text-white border-none"
+          </a>
+          <a
+            href="#projects"
+            className="bg-gradient-to-r from-black to-blue-600 hover:from-blue-600 hover:to-purple-600 text-white border-none px-6 py-3 rounded-lg text-md text-center"
           >
             Download Resume
-          </Button>
+          </a>
         </motion.div>
       </motion.div>
 
