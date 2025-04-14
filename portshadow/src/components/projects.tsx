@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { useInView } from "react-intersection-observer"
-import Image from "next/image"
-import { ExternalLink, Github, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import Image from "next/image";
+import { ExternalLink, Github, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -13,89 +13,100 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 
 interface Project {
-  id: number
-  title: string
-  description: string
-  image: string
-  tags: string[]
-  demoUrl: string
-  githubUrl: string
-  longDescription: string
-  features: string[]
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  demoUrl: string;
+  githubUrl: string;
+  longDescription: string;
+  features: string[];
 }
 
 const projects: Project[] = [
   {
     id: 1,
-    title: "AI Dashboard",
-    description: "A futuristic dashboard for monitoring AI systems with real-time analytics.",
-    image: "/placeholder.svg?height=600&width=800",
-    tags: ["React", "TypeScript", "Tailwind CSS", "Chart.js"],
+    title: "CarbonTrack - AI Carbon Footprint Dashboard",
+    description:
+      "An AI-powered dashboard for tracking and reducing carbon emissions and personal carbon footprint.",
+    image: "/images/CarbonTrack Pic.avif?height=600&width=800",
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "AI"],
     demoUrl: "#",
-    githubUrl: "#",
+    githubUrl: "https://github.com/geothermal-1408/co2",
     longDescription:
-      "A comprehensive dashboard for monitoring AI systems with real-time analytics, performance metrics, and system health indicators. The dashboard provides insights into AI model performance, resource utilization, and anomaly detection.",
+      "CarbonTrack is an AI-powered web application designed to help individuals and organizations monitor their carbon emissions and overall carbon footprint. The dashboard provides real-time insights, personalized recommendations, and actionable strategies to reduce and neutralize emissions using AI-driven suggestions.",
     features: [
-      "Real-time data visualization",
-      "Interactive charts and graphs",
-      "System health monitoring",
-      "Anomaly detection and alerts",
-      "Responsive design for all devices",
+      "Real-time carbon footprint tracking",
+      "Visual dashboards with interactive graphs and charts",
+      "AI-powered emission neutralization suggestions",
+      "Personalized insights and tips for carbon reduction",
+      "Fully responsive design with dark mode support",
     ],
   },
   {
     id: 2,
-    title: "E-Commerce Platform",
-    description: "A modern e-commerce platform with advanced filtering and payment integration.",
-    image: "/placeholder.svg?height=600&width=800",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Stripe"],
+    title: "VerifyIQ - Academic Credential Verification",
+    description:
+      "A decentralized platform for verifying academic credentials and predicting skills using AI.",
+    image: "/images/VerifyIQ-pic.webp?height=600&width=800",
+    tags: [
+      "Vite",
+      "TypeScript",
+      "Tailwind CSS",
+      "Blockchain",
+      "Prisma",
+      "PostgreSQL",
+      "AI",
+    ],
     demoUrl: "#",
-    githubUrl: "#",
+    githubUrl: "https://github.com/Rupayan2005/VerifyIQ",
     longDescription:
-      "A full-featured e-commerce platform built with Next.js and TypeScript. The platform includes product catalog, advanced filtering, shopping cart, user authentication, and payment processing with Stripe integration.",
+      "VerifyIQ is a blockchain-based platform for secure and tamper-proof academic credential verification. It combines decentralized technology with AI-powered skill prediction to help institutions, students, and employers validate educational records. The platform includes credential storage on blockchain, intelligent skill inference, role-based dashboards, and real-time verification access.",
     features: [
-      "Product catalog with categories",
-      "Advanced filtering and search",
-      "User authentication and profiles",
-      "Shopping cart and wishlist",
-      "Secure payment processing with Stripe",
+      "Secure credential storage on blockchain",
+      "AI-powered skill prediction from academic data",
+      "Student, institution, and employer dashboards",
+      "Real-time verification system for credentials",
+      "Responsive design with intuitive UI/UX",
     ],
   },
   {
     id: 3,
-    title: "Virtual Reality Experience",
-    description: "An immersive VR experience for educational purposes using WebXR.",
-    image: "/placeholder.svg?height=600&width=800",
-    tags: ["Three.js", "WebXR", "React", "TypeScript"],
+    title: "Neurex - AI Mental Health Predictor",
+    description:
+      "A privacy-focused AI system for predicting mental health conditions using encrypted data.",
+    image: "/images/Neurex-pic.png?height=600&width=800",
+    tags: ["Next.js", "TypeScript", "Privacy", "Encryption", "Mental Health", "AI ChatBot"],
     demoUrl: "#",
-    githubUrl: "#",
+    githubUrl: "https://github.com/Davygupta47/Neurex",
     longDescription:
-      "An immersive virtual reality experience built for educational purposes using WebXR and Three.js. The experience allows users to explore 3D environments and interact with educational content in a virtual space.",
+      "Neurex is an AI-powered mental health prediction platform that prioritizes user privacy by training models on encrypted datasets. The system analyzes behavioral and emotional patterns to provide early insights into potential mental health conditions. Designed for both individuals and healthcare professionals, Neurex blends ethical AI with real-world mental health support.",
     features: [
-      "Immersive 3D environments",
-      "Interactive educational content",
-      "Cross-device compatibility",
-      "Progressive enhancement for non-VR devices",
-      "Spatial audio for immersive experience",
+      "Encrypted training data for full privacy",
+      "AI-based prediction of mental health conditions",
+      "Personalized insights and risk indicators",
+      "Secure and ethical data handling",
+      "Responsive design for accessibility on all devices",
     ],
   },
-]
+];
 
 export default function Projects() {
   const [ref, inView] = useInView({
     triggerOnce: false,
     threshold: 0.1,
-  })
+  });
 
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
-  }
+  };
 
   return (
     <section id="projects" className="py-20 relative">
@@ -121,8 +132,8 @@ export default function Projects() {
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto"></div>
           <p className="text-white/70 mt-6 max-w-2xl mx-auto">
-            Explore my latest projects showcasing my skills and expertise in web development, design, and interactive
-            experiences.
+            Explore my latest projects showcasing my skills and expertise in web
+            development, Machine Learning, and interactive experiences.
           </p>
         </motion.div>
 
@@ -161,10 +172,15 @@ export default function Projects() {
                 </div>
                 <div className="p-6 flex flex-col flex-grow">
                   <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                  <p className="text-white/70 mb-4 flex-grow">{project.description}</p>
+                  <p className="text-white/70 mb-4 flex-grow">
+                    {project.description}
+                  </p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.tags.map((tag, index) => (
-                      <span key={index} className="text-xs px-2 py-1 rounded-full bg-white/10 text-white/80">
+                      <span
+                        key={index}
+                        className="text-xs px-2 py-1 rounded-full bg-white/10 text-white/80"
+                      >
                         {tag}
                       </span>
                     ))}
@@ -182,13 +198,17 @@ export default function Projects() {
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[600px] bg-black/90 backdrop-blur-md border border-white/20">
                       <DialogHeader>
-                        <DialogTitle className="text-2xl font-bold text-gradient">{selectedProject?.title}</DialogTitle>
+                        <DialogTitle className="text-2xl font-bold text-gradient text-white">
+                          {selectedProject?.title}
+                        </DialogTitle>
                         <DialogDescription className="text-white/70">
                           {selectedProject?.longDescription}
                         </DialogDescription>
                       </DialogHeader>
                       <div className="mt-4">
-                        <h4 className="font-semibold mb-2">Key Features:</h4>
+                        <h4 className="font-semibold mb-2 text-white">
+                          Key Features:
+                        </h4>
                         <ul className="list-disc pl-5 space-y-1">
                           {selectedProject?.features.map((feature, index) => (
                             <li key={index} className="text-white/80">
@@ -202,7 +222,7 @@ export default function Projects() {
                           href={selectedProject?.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 text-sm hover:text-blue-400 transition-colors"
+                          className="flex items-center gap-2 text-sm hover:text-blue-400 transition-colors text-white"
                         >
                           <Github className="w-4 h-4" />
                           View Code
@@ -211,7 +231,7 @@ export default function Projects() {
                           href={selectedProject?.demoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 text-sm hover:text-blue-400 transition-colors"
+                          className="flex items-center gap-2 text-sm hover:text-blue-400 transition-colors text-white"
                         >
                           <ExternalLink className="w-4 h-4" />
                           Live Demo
@@ -226,5 +246,5 @@ export default function Projects() {
         </div>
       </motion.div>
     </section>
-  )
+  );
 }
