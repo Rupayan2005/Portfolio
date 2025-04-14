@@ -1,51 +1,87 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { useInView } from "react-intersection-observer"
-import { Mail, Phone, MapPin, Send } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { FloatingDock } from "@/components/ui/floating-dock";
+import {
+  IconBrandGithub,
+  IconBrandInstagram,
+  IconBrandLinkedin,
+  IconBrandX,
+} from "@tabler/icons-react";
 //import { useToast } from "@/components/ui/use-toast"
-const buttonVariants = {
-  initial: { scale: 1, x: 0, y: 0 },
-  hover: { scale: 1.05, x: 4, y: -4, transition: { type: "spring", stiffness: 300 } },
-  tap: { scale: 0.95, x: 0, y: 0 },
-};
 export default function Contact() {
   //const { toast } = useToast()
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     subject: "",
     message: "",
-  })
+  });
 
   const [ref, inView] = useInView({
     triggerOnce: false,
     threshold: 0.1,
-  })
+  });
 
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
-  }
+  };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const links = [
+    {
+      title: "Github",
+      icon: (
+        <IconBrandGithub className="h-full w-full text-white" />
+      ),
+      href: "https://github.com/Rupayan2005",
+    },
+
+    {
+      title: "X",
+      icon: (
+        <IconBrandX className="h-full w-full text-white" />
+      ),
+      href: "https://x.com/RupayanAuddya",
+    },
+    {
+      title: "Linkedin",
+      icon: (
+        <IconBrandLinkedin className="h-full w-full text-white" />
+      ),
+      href: "https://www.linkedin.com/in/rupayan-auddya-373998323/",
+    },
+    {
+      title: "Instagram",
+      icon: (
+        <IconBrandInstagram className="h-full w-full text-white" />
+      ),
+      href: "https://www.instagram.com/rupayanauddya12?igsh=MWMydGd6d3Y1NGNkbg==",
+    },
+  ];
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+    e.preventDefault();
+    setIsSubmitting(true);
 
     // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     // toast({
     //   title: "Message sent!",
@@ -57,10 +93,10 @@ export default function Contact() {
       email: "",
       subject: "",
       message: "",
-    })
+    });
 
-    setIsSubmitting(false)
-  }
+    setIsSubmitting(false);
+  };
 
   return (
     <section id="contact" className="py-20 relative">
@@ -86,8 +122,8 @@ export default function Contact() {
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto"></div>
           <p className="text-white/70 mt-6 max-w-2xl mx-auto">
-            Have a project in mind or want to collaborate? Feel free to reach out to me. I'm always open to discussing
-            new opportunities.
+            Have a project in mind or want to collaborate? Feel free to reach
+            out to me. I'm always open to discussing new opportunities.
           </p>
         </motion.div>
 
@@ -104,10 +140,10 @@ export default function Contact() {
                   <div>
                     <h4 className="font-medium mb-1">Email</h4>
                     <a
-                      href="mailto:your.email@example.com"
+                      href="mailto:shadowdragon0004@gmail.com"
                       className="text-white/70 hover:text-white transition-colors"
                     >
-                      your.email@example.com
+                      shadowdragon0004@gmail.com
                     </a>
                   </div>
                 </div>
@@ -118,8 +154,8 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="font-medium mb-1">Phone</h4>
-                    <a href="tel:+1234567890" className="text-white/70 hover:text-white transition-colors">
-                      +1 (234) 567-890
+                    <a className="text-white/70 transition-colors">
+                      +91 123-456-7890
                     </a>
                   </div>
                 </div>
@@ -130,24 +166,20 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="font-medium mb-1">Location</h4>
-                    <p className="text-white/70">San Francisco, California</p>
+                    <p className="text-white/70">
+                      Baranagar,Kolkata(West Bengal)
+                    </p>
                   </div>
                 </div>
               </div>
 
               <div className="mt-8 pt-8 border-t border-white/10">
                 <h4 className="font-medium mb-4">Connect with me</h4>
-                <div className="flex space-x-4">
-                  {["github", "twitter", "linkedin", "instagram"].map((social) => (
-                    <a
-                      key={social}
-                      href="#"
-                      className="p-3 rounded-full bg-white/5 hover:bg-white/10 transition-colors"
-                      aria-label={`Visit my ${social} profile`}
-                    >
-                      <span className="capitalize">{social.charAt(0)}</span>
-                    </a>
-                  ))}
+                <div className="flex space-x-2 mr-70 pr-20">
+                  <FloatingDock
+                    mobileClassName="translate-y-20" // only for demo, remove for production
+                    items={links}
+                  />
                 </div>
               </div>
             </div>
@@ -159,7 +191,10 @@ export default function Contact() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-2">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium mb-2"
+                  >
                     Your Name
                   </label>
                   <Input
@@ -173,7 +208,10 @@ export default function Contact() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-2">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium mb-2"
+                  >
                     Your Email
                   </label>
                   <Input
@@ -190,7 +228,10 @@ export default function Contact() {
               </div>
 
               <div className="mb-6">
-                <label htmlFor="subject" className="block text-sm font-medium mb-2">
+                <label
+                  htmlFor="subject"
+                  className="block text-sm font-medium mb-2"
+                >
                   Subject
                 </label>
                 <Input
@@ -205,7 +246,10 @@ export default function Contact() {
               </div>
 
               <div className="mb-6">
-                <label htmlFor="message" className="block text-sm font-medium mb-2">
+                <label
+                  htmlFor="message"
+                  className="block text-sm font-medium mb-2"
+                >
                   Message
                 </label>
                 <Textarea
@@ -223,7 +267,7 @@ export default function Contact() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
+                className="w-full my-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transform transition duration-300 hover:-translate-y-1 hover:scale-105 shadow-md hover:shadow-2xl"
               >
                 {isSubmitting ? (
                   <span className="flex items-center">
@@ -261,5 +305,5 @@ export default function Contact() {
         </div>
       </motion.div>
     </section>
-  )
+  );
 }
