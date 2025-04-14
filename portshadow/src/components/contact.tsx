@@ -167,7 +167,7 @@ export default function Contact() {
                   <div>
                     <h4 className="font-medium mb-1">Location</h4>
                     <p className="text-white/70">
-                      Baranagar,Kolkata(West Bengal)
+                      Baranagar, Kolkata (West Bengal)
                     </p>
                   </div>
                 </div>
