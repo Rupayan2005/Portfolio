@@ -121,7 +121,7 @@ export default function Contact() {
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
           <motion.div variants={fadeIn} className="lg:col-span-2 space-y-8">
-            <div className="glass rounded-xl p-6">
+            <div className="glass rounded-xl">
               <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
 
               <div className="space-y-6">
@@ -169,7 +169,6 @@ export default function Contact() {
                 <h4 className="font-medium mb-4">Connect with me</h4>
                 <div className="flex space-x-2 mr-70 pr-20">
                   <FloatingDock
-                    mobileClassName="translate-y-20" // only for demo, remove for production
                     items={links}
                   />
                 </div>

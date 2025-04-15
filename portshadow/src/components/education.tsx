@@ -1,13 +1,13 @@
 "use client"
 
-import { useRef , JSX } from "react"
-import { motion, useInView } from "framer-motion"
+import { JSX } from "react"
+import { motion } from "framer-motion"
 import { Award, BookOpen, GraduationCap, Calendar, Percent, MapPin, Sparkles } from "lucide-react"
 import RotatingCube from "@/components/rotating-cube"
+import { useInView } from "react-intersection-observer"
 import ParticleWave from "@/components/particle-wave"
 import { Badge } from "@/components/ui/badge"
 
-// Education data - customize with your actual information
 const educationData = [
   {
     id: 1,
@@ -33,7 +33,7 @@ const educationData = [
   },
   {
     id: 3,
-    level: "Bachelor's in Technology(B.Tech)",
+    level: "Bachelor's in Technology",
     school: "Heritage Institute of Technology",
     board: "Computer Science & Engineering(AI/ML)",
     year: "2023 - Present",
@@ -46,48 +46,38 @@ const educationData = [
 ]
 
 export default function Education() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, amount: 0.1 })
+  const [ref, inView] = useInView({
+    triggerOnce: false,
+    threshold: 0.1,
+  })
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.3,
+        staggerChildren: 0.2,
       },
     },
   }
 
   return (
     <section id="education" className="py-20 relative overflow-hidden">
-      {/* Background elements */}
       <div className="absolute inset-0 grid-background opacity-30"></div>
-      <RotatingCube
-        position="top-right"
-        size={80}
-        color="rgba(168, 85, 247, 0.15)"
-        glowColor="rgba(168, 85, 247, 0.3)"
-      />
-      <RotatingCube
-        position="bottom-left"
-        size={100}
-        color="rgba(59, 130, 246, 0.15)"
-        glowColor="rgba(59, 130, 246, 0.3)"
-        rotationSpeed={25}
-      />
+      <RotatingCube position="top-right" size={80} color="rgba(168, 85, 247, 0.15)" glowColor="rgba(168, 85, 247, 0.3)" />
+      <RotatingCube position="bottom-left" size={100} color="rgba(59, 130, 246, 0.15)" glowColor="rgba(59, 130, 246, 0.3)" rotationSpeed={25} />
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           ref={ref}
           variants={containerVariants}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          animate={inView ? "visible" : "hidden"}
           className="max-w-6xl mx-auto"
         >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
@@ -97,24 +87,20 @@ export default function Education() {
             </p>
           </motion.div>
 
-          {/* Particle wave at the top */}
           <div className="mb-16">
             <ParticleWave height={80} color="rgba(168, 85, 247, 0.4)" />
           </div>
 
           <div className="relative">
-            {/* Vertical timeline line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-purple-500 via-blue-500 to-cyan-500 rounded-full"></div>
+            <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 h-full w-1 bg-gradient-to-b from-purple-500 via-blue-500 to-cyan-500 rounded-full"></div>
 
-            {/* Education cards */}
-            <div className="space-y-24">
+            <div className="flex flex-col gap-24">
               {educationData.map((education, index) => (
-                <EducationCard key={education.id} education={education} index={index} isInView={isInView} />
+                <EducationCard key={education.id} education={education} index={index} isInView={inView} />
               ))}
             </div>
           </div>
 
-          {/* Particle wave at the bottom */}
           <div className="mt-16">
             <ParticleWave height={80} color="rgba(34, 211, 238, 0.4)" />
           </div>
@@ -158,24 +144,30 @@ function EducationCard({ education, index, isInView }: { education: Education; i
   }
 
   return (
-    <div className={`flex items-center justify-center ${isEven ? "md:justify-start" : "md:justify-end"}`}>
+    <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+      {isEven && <div className="hidden md:block md:w-5/12"></div>}
+
+      {/* Timeline node */}
+      <motion.div
+        initial={{ scale: 0, opacity: 0 }}
+        animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+        transition={{ delay: 0.2 * index, duration: 0.5 }}
+        className="relative z-10"
+      >
+        <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${education.color} flex items-center justify-center`}>
+          <div className="w-3 h-3 rounded-full bg-white"></div>
+        </div>
+      </motion.div>
+
       <motion.div
         variants={cardVariants}
         className={`relative w-full md:w-5/12 glass-effect rounded-2xl overflow-hidden ${education.current ? "pulse-glow" : ""}`}
       >
-        {/* Connector to timeline */}
-        <div
-          className={`absolute top-1/2 hidden md:block h-1 w-8 bg-gradient-to-r ${isEven ? "from-purple-500 to-transparent left-0 -translate-x-full" : "from-transparent to-purple-500 right-0 translate-x-full"} transform -translate-y-1/2`}
-        ></div>
+        <div className={`absolute top-1/2 hidden md:block h-1 w-8 bg-gradient-to-r ${isEven ? "from-purple-500 to-transparent left-0 -translate-x-full" : "from-transparent to-purple-500 right-0 translate-x-full"} transform -translate-y-1/2`}></div>
 
-        {/* Card content */}
         <div className="p-6 relative overflow-hidden">
-          {/* Background glow */}
-          <div
-            className={`absolute -inset-1 bg-gradient-to-r ${education.color} opacity-20 blur-xl rounded-full`}
-          ></div>
+          <div className={`absolute -inset-1 bg-gradient-to-r ${education.color} opacity-20 blur-xl rounded-full`}></div>
 
-          {/* Header */}
           <div className="flex items-center gap-4 mb-4 relative">
             <div className={`p-3 rounded-xl bg-gradient-to-r ${education.color} text-white`}>{education.icon}</div>
             <div>
@@ -183,13 +175,12 @@ function EducationCard({ education, index, isInView }: { education: Education; i
               <p className="text-gray-400">{education.school}</p>
             </div>
             {education.current && (
-              <Badge className="absolute right-0 top-0 bg-gradient-to-r from-purple-500 to-blue-500 text-white border-none">
+              <Badge className="absolute -right-1 -top-6 bg-gradient-to-r from-purple-500 to-blue-500 text-white border-none">
                 <Sparkles className="h-3 w-3 mr-1" /> Current
               </Badge>
             )}
           </div>
 
-          {/* Details */}
           <div className="space-y-4">
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2 text-gray-300">
@@ -209,7 +200,6 @@ function EducationCard({ education, index, isInView }: { education: Education; i
                 <span>{education.location}</span>
               </div>
             </div>
-            {/* Interactive element - only for current education */}
             {education.current && (
               <motion.div
                 className="mt-4 p-3 rounded-lg bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-white/10"
@@ -218,33 +208,18 @@ function EducationCard({ education, index, isInView }: { education: Education; i
               >
                 <h4 className="text-sm font-semibold mb-1">Current Focus</h4>
                 <p className="text-xs text-gray-400">
-                  Specializing in AI and Machine Learning with a focus on neural networks and deep learning
-                  applications.
+                  Specializing in AI and Machine Learning with a focus on neural networks and deep learning applications.
                 </p>
               </motion.div>
             )}
           </div>
 
-          {/* Decorative elements */}
           <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-gradient-to-r from-purple-500/10 to-blue-500/10 blur-xl"></div>
           <div className="absolute -top-6 -left-6 w-16 h-16 rounded-full bg-gradient-to-r from-cyan-500/10 to-purple-500/10 blur-lg"></div>
         </div>
       </motion.div>
 
-      {/* Timeline node */}
-      <motion.div
-        initial={{ scale: 0, opacity: 0 }}
-        animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
-        transition={{ delay: 0.2 * index, duration: 0.5 }}
-        className="relative z-10 mx-4 md:mx-0"
-      >
-        <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${education.color} flex items-center justify-center`}>
-          <div className="w-3 h-3 rounded-full bg-white"></div>
-        </div>
-      </motion.div>
-
-      {/* Empty div for layout on mobile */}
-      <div className="hidden md:block md:w-5/12"></div>
+      {!isEven && <div className="hidden md:block md:w-5/12"></div>}
     </div>
   )
 }

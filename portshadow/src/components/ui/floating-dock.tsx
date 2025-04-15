@@ -44,13 +44,13 @@ const FloatingDockMobile = ({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className={cn("fixed bottom-4 right-4 md:hidden flex items-end", className)}>
+    <div className={cn("md:hidden flex items-end", className)}>
       <div className="relative flex items-center">
         <AnimatePresence>
           {open && (
             <motion.div
               layoutId="nav"
-              className="absolute left-full ml-2 bottom-0 flex flex-row gap-2"
+              className="absolute left-full ml-2 flex flex-row gap-2"
             >
               {items.map((item, idx) => (
                 <motion.div
@@ -68,9 +68,9 @@ const FloatingDockMobile = ({
                 >
                   <Link
                     href={item.href}
-                    className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-900 flex items-center justify-center text-neutral-800 dark:text-neutral-200"
+                    className="h-10 w-10 rounded-full bg-black flex items-center justify-center text-white"
                   >
-                    <div className="h-4 w-4">{item.icon}</div>
+                    <div className="h-6 w-6">{item.icon}</div>
                   </Link>
                 </motion.div>
               ))}
@@ -80,9 +80,12 @@ const FloatingDockMobile = ({
 
         <button
           onClick={() => setOpen(!open)}
-          className="h-10 w-10 rounded-full bg-black flex items-center justify-center"
+          className={cn(
+            "h-8 w-8 rounded-full bg-black flex items-center justify-center",
+            open
+          )}
         >
-          <IconLayoutNavbarCollapse className="h-5 w-5 text-white" />
+          <IconLayoutNavbarCollapse className="h-8 w-8 text-white" />
         </button>
       </div>
     </div>

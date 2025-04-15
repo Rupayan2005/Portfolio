@@ -1,8 +1,8 @@
 "use client"
 
-import { useRef } from "react"
-import { motion, useInView } from "framer-motion"
+import { motion } from "framer-motion"
 import Image from "next/image"
+import { useInView } from "react-intersection-observer";
 import { Code, Layout, Server, Cloud, Database, BarChart3, Brain, Wrench } from "lucide-react"
 
 // Define skill categories and their respective skills
@@ -108,8 +108,11 @@ const skillCategories = [
 ]
 
 export default function Skills() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, amount: 0.1 })
+  //const ref = useRef(null)
+  const [ref, inView] = useInView({
+    triggerOnce: false,
+    threshold: 0.1,
+  });
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -158,7 +161,7 @@ export default function Skills() {
           ref={ref}
           variants={containerVariants}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          animate={inView ? "visible" : "hidden"}
           className="max-w-6xl mx-auto"
         >
           <motion.div variants={headerVariants} className="text-center mb-16">

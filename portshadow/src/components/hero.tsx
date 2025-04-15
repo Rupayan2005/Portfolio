@@ -123,7 +123,7 @@ export default function Hero() {
         }}
       >
         <a
-          href="/about"
+          href="/#about"
           className="flex flex-col items-center text-white/50 hover:text-white transition-colors"
         >
           <span className="text-sm mb-2">Scroll Down</span>
