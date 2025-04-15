@@ -47,31 +47,23 @@ export default function Contact() {
   const links = [
     {
       title: "Github",
-      icon: (
-        <IconBrandGithub className="h-full w-full text-white" />
-      ),
+      icon: <IconBrandGithub className="h-full w-full text-white" />,
       href: "https://github.com/Rupayan2005",
     },
 
     {
       title: "X",
-      icon: (
-        <IconBrandX className="h-full w-full text-white" />
-      ),
+      icon: <IconBrandX className="h-full w-full text-white" />,
       href: "https://x.com/RupayanAuddya",
     },
     {
       title: "Linkedin",
-      icon: (
-        <IconBrandLinkedin className="h-full w-full text-white" />
-      ),
+      icon: <IconBrandLinkedin className="h-full w-full text-white" />,
       href: "https://www.linkedin.com/in/rupayan-auddya-373998323/",
     },
     {
       title: "Instagram",
-      icon: (
-        <IconBrandInstagram className="h-full w-full text-white" />
-      ),
+      icon: <IconBrandInstagram className="h-full w-full text-white" />,
       href: "https://www.instagram.com/rupayanauddya12?igsh=MWMydGd6d3Y1NGNkbg==",
     },
   ];
@@ -186,7 +178,37 @@ export default function Contact() {
           </motion.div>
 
           <motion.div variants={fadeIn} className="lg:col-span-3">
-            <form onSubmit={handleSubmit} className="glass rounded-xl p-6">
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault();
+                setIsSubmitting(true); 
+                const form = e.target as HTMLFormElement;
+                const data = new FormData(form);
+
+                const response = await fetch(
+                  "https://api.web3forms.com/submit",
+                  {
+                    method: "POST",
+                    body: data,
+                  }
+                );
+
+                if (response.ok) {
+                  alert("Message sent successfully!");
+                  setFormData({
+                    name: "",
+                    email: "",
+                    subject: "",
+                    message: "",
+                  });
+                } else {
+                  alert("Something went wrong.");
+                }
+                setIsSubmitting(false);
+              }}
+              className="glass rounded-xl p-6"
+            >
+              <input type="hidden" name="access_key" value="5bcf33b6-9f15-4a1f-a1a6-26cf7fd824d6" />
               <h3 className="text-2xl font-bold mb-6">Send a Message</h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
