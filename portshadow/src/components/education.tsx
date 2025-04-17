@@ -1,12 +1,20 @@
-"use client"
+"use client";
 
-import { JSX } from "react"
-import { motion } from "framer-motion"
-import { Award, BookOpen, GraduationCap, Calendar, Percent, MapPin, Sparkles } from "lucide-react"
-import RotatingCube from "@/components/rotating-cube"
-import { useInView } from "react-intersection-observer"
-import ParticleWave from "@/components/particle-wave"
-import { Badge } from "@/components/ui/badge"
+import { JSX } from "react";
+import { motion } from "framer-motion";
+import {
+  Award,
+  BookOpen,
+  GraduationCap,
+  Calendar,
+  Percent,
+  MapPin,
+  Sparkles,
+} from "lucide-react";
+import RotatingCube from "@/components/rotating-cube";
+import { useInView } from "react-intersection-observer";
+import ParticleWave from "@/components/particle-wave";
+import { Badge } from "@/components/ui/badge";
 
 const educationData = [
   {
@@ -43,13 +51,13 @@ const educationData = [
     icon: <GraduationCap className="h-6 w-6" />,
     current: true,
   },
-]
+];
 
 export default function Education() {
   const [ref, inView] = useInView({
     triggerOnce: false,
     threshold: 0.1,
-  })
+  });
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -59,13 +67,24 @@ export default function Education() {
         staggerChildren: 0.2,
       },
     },
-  }
+  };
 
   return (
     <section id="education" className="py-20 relative overflow-hidden">
       <div className="absolute inset-0 grid-background opacity-30"></div>
-      <RotatingCube position="top-right" size={80} color="rgba(168, 85, 247, 0.15)" glowColor="rgba(168, 85, 247, 0.3)" />
-      <RotatingCube position="bottom-left" size={100} color="rgba(59, 130, 246, 0.15)" glowColor="rgba(59, 130, 246, 0.3)" rotationSpeed={25} />
+      <RotatingCube
+        position="top-right"
+        size={80}
+        color="rgba(100, 20, 20, 0.15)"
+        glowColor="rgba(168, 85, 247, 0.3)"
+      />
+      <RotatingCube
+        position="bottom-left"
+        size={100}
+        color="rgba(20, 30, 60, 0.15)"
+        glowColor="rgba(59, 130, 246, 0.3)"
+        rotationSpeed={25}
+      />
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
@@ -81,9 +100,13 @@ export default function Education() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-bold gradient-text">Academic Journey</h2>
-            <p className="text-gray-400 mt-4 max-w-2xl mx-auto">
-              Exploring the path of knowledge and growth through formal education and continuous learning
+            <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
+              Academic Journey
+            </h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-blue-600 to-red-600 mx-auto"></div>
+            <p className="text-white/70 mt-4 max-w-2xl mx-auto">
+              Exploring the path of knowledge and growth through formal
+              education and continuous learning
             </p>
           </motion.div>
 
@@ -92,11 +115,18 @@ export default function Education() {
           </div>
 
           <div className="relative">
-            <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 h-full w-1 bg-gradient-to-b from-purple-500 via-blue-500 to-cyan-500 rounded-full"></div>
+            <div
+              className="absolute md:left-1/2 transform md:-translate-x-1/2 h-full w-1 bg-gradient-to-b from-blue-600 to-red-600 rounded-full"
+            ></div>
 
             <div className="flex flex-col gap-24">
               {educationData.map((education, index) => (
-                <EducationCard key={education.id} education={education} index={index} isInView={inView} />
+                <EducationCard
+                  key={education.id}
+                  education={education}
+                  index={index}
+                  isInView={inView}
+                />
               ))}
             </div>
           </div>
@@ -107,24 +137,32 @@ export default function Education() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
 
 interface Education {
-  id: number
-  level: string
-  school: string
-  board: string
-  year: string
-  percentage: string
-  location: string
-  color: string
-  icon: JSX.Element
-  current?: boolean
+  id: number;
+  level: string;
+  school: string;
+  board: string;
+  year: string;
+  percentage: string;
+  location: string;
+  color: string;
+  icon: JSX.Element;
+  current?: boolean;
 }
 
-function EducationCard({ education, index, isInView }: { education: Education; index: number; isInView: boolean }) {
-  const isEven = index % 2 === 0
+function EducationCard({
+  education,
+  index,
+  isInView,
+}: {
+  education: Education;
+  index: number;
+  isInView: boolean;
+}) {
+  const isEven = index % 2 === 0;
 
   const cardVariants = {
     hidden: {
@@ -141,7 +179,7 @@ function EducationCard({ education, index, isInView }: { education: Education; i
         ease: "easeOut",
       },
     },
-  }
+  };
 
   return (
     <div className="flex flex-col md:flex-row items-center justify-center gap-6">
@@ -154,22 +192,38 @@ function EducationCard({ education, index, isInView }: { education: Education; i
         transition={{ delay: 0.2 * index, duration: 0.5 }}
         className="relative z-10"
       >
-        <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${education.color} flex items-center justify-center`}>
+        <div
+          className={`w-8 h-8 rounded-full bg-gradient-to-r ${education.color} flex items-center justify-center`}
+        >
           <div className="w-3 h-3 rounded-full bg-white"></div>
         </div>
       </motion.div>
 
       <motion.div
         variants={cardVariants}
-        className={`relative w-full md:w-5/12 glass-effect rounded-2xl overflow-hidden ${education.current ? "pulse-glow" : ""}`}
+        className={`relative w-full md:w-5/12 glass-effect rounded-2xl overflow-hidden ${
+          education.current ? "pulse-glow" : ""
+        }`}
       >
-        <div className={`absolute top-1/2 hidden md:block h-1 w-8 bg-gradient-to-r ${isEven ? "from-purple-500 to-transparent left-0 -translate-x-full" : "from-transparent to-purple-500 right-0 translate-x-full"} transform -translate-y-1/2`}></div>
+        <div
+          className={`absolute top-1/2 hidden md:block h-1 w-8 bg-gradient-to-r ${
+            isEven
+              ? "from-purple-500 to-transparent left-0 -translate-x-full"
+              : "from-transparent to-purple-500 right-0 translate-x-full"
+          } transform -translate-y-1/2`}
+        ></div>
 
         <div className="p-6 relative overflow-hidden">
-          <div className={`absolute -inset-1 bg-gradient-to-r ${education.color} opacity-20 blur-xl rounded-full`}></div>
+          <div
+            className={`absolute -inset-1 bg-gradient-to-r ${education.color} opacity-20 blur-xl rounded-full`}
+          ></div>
 
           <div className="flex items-center gap-4 mb-4 relative">
-            <div className={`p-3 rounded-xl bg-gradient-to-r ${education.color} text-white`}>{education.icon}</div>
+            <div
+              className={`p-3 rounded-xl bg-gradient-to-r ${education.color} text-white`}
+            >
+              {education.icon}
+            </div>
             <div>
               <h3 className="text-2xl font-bold">{education.level}</h3>
               <p className="text-gray-400">{education.school}</p>
@@ -208,7 +262,8 @@ function EducationCard({ education, index, isInView }: { education: Education; i
               >
                 <h4 className="text-sm font-semibold mb-1">Current Focus</h4>
                 <p className="text-xs text-gray-400">
-                  Specializing in AI and Machine Learning with a focus on neural networks and deep learning applications.
+                  Specializing in AI and Machine Learning with a focus on neural
+                  networks and deep learning applications.
                 </p>
               </motion.div>
             )}
@@ -219,7 +274,7 @@ function EducationCard({ education, index, isInView }: { education: Education; i
         </div>
       </motion.div>
 
-      {!isEven && <div className="hidden md:block md:w-5/12"></div>}
+      {!isEven && <div className="hidden md:block md:w-6/12"></div>}
     </div>
-  )
+  );
 }

@@ -134,10 +134,11 @@ function IconContainer({
     return val - bounds.x - bounds.width / 2;
   });
 
-  let widthTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
-  let heightTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
-  let widthTransformIcon = useTransform(distance, [-150, 0, 150], [24, 48, 24]);
-  let heightTransformIcon = useTransform(distance, [-150, 0, 150], [30, 60, 30]);
+  let widthTransform = useTransform(distance, [-150, 0, 150], [40, 70, 40]);
+let heightTransform = useTransform(distance, [-150, 0, 150], [40, 70, 40]);
+let widthTransformIcon = useTransform(distance, [-150, 0, 150], [24, 36, 24]);
+let heightTransformIcon = useTransform(distance, [-150, 0, 150], [24, 36, 24]);
+
 
   let width = useSpring(widthTransform, {
     mass: 0.1,

@@ -97,13 +97,13 @@ export default function Hero() {
         >
           <a
             href="#projects"
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-black hover:to-blue-600 text-white border-none px-6 py-3 rounded-lg text-md text-center"
+            className="bg-gradient-to-r from-black to-red-600 hover:from-blue-600 hover:to-black text-white border-none px-6 py-3 rounded-lg text-md text-center"
           >
             View My Work
           </a>
           <a
             href="#projects"
-            className="bg-gradient-to-r from-black to-blue-600 hover:from-blue-600 hover:to-purple-600 text-white border-none px-6 py-3 rounded-lg text-md text-center"
+            className="bg-gradient-to-r from-blue-600 to-black hover:from-black hover:to-red-600 text-white border-none px-6 py-3 rounded-lg text-md text-center"
           >
             Download Resume
           </a>

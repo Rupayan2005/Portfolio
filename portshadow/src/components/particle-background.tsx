@@ -49,7 +49,7 @@ export default function ParticlesBackground() {
         },
         particles: {
           color: {
-            value: "#ffffff",
+            value: ["#0070f3", "#ff0000", "#004299"],
           },
           links: {
             color: "#ffffff",
@@ -76,7 +76,7 @@ export default function ParticlesBackground() {
             value: 80,
           },
           opacity: {
-            value: 0.2,
+            value: 0.5,
           },
           shape: {
             type: "circle",

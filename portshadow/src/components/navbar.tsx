@@ -18,12 +18,30 @@ const navItems = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [activeSection, setActiveSection] = useState("home")
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50)
+
+      const scrollPosition = window.scrollY + window.innerHeight / 2
+
+      for (const item of navItems) {
+        const section = document.querySelector(item.href)
+        if (section) {
+          const offsetTop = (section as HTMLElement).offsetTop
+          const offsetHeight = section.clientHeight
+
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(item.name.toLowerCase())
+            break
+          }
+        }
+      }
     }
+
     window.addEventListener("scroll", handleScroll)
+    handleScroll()
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
@@ -46,9 +64,22 @@ export default function Navbar() {
         <ul className="hidden md:flex space-x-9 text-lg">
           {navItems.map((item) => (
             <li key={item.name}>
-              <Link href={item.href} className="text-white/70 hover:text-white transition-colors relative group">
+              <Link
+                href={item.href}
+                className={cn(
+                  "transition-colors relative group",
+                  activeSection === item.name.toLowerCase()
+                    ? "text-white"
+                    : "text-white/70 hover:text-white"
+                )}
+              >
                 {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 group-hover:w-full"></span>
+                <span
+                  className={cn(
+                    "absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-500 to-red-500 transition-all duration-300",
+                    activeSection === item.name.toLowerCase() ? "w-full" : "w-0 group-hover:w-full"
+                  )}
+                ></span>
               </Link>
             </li>
           ))}
@@ -74,7 +105,12 @@ export default function Navbar() {
               <li key={item.name}>
                 <Link
                   href={item.href}
-                  className="block py-3 px-6 text-white/70 hover:text-white hover:bg-white/5 transition-colors"
+                  className={cn(
+                    "block py-3 px-6 transition-colors",
+                    activeSection === item.name.toLowerCase()
+                      ? "text-white bg-white/10"
+                      : "text-white/70 hover:text-white hover:bg-white/5"
+                  )}
                   onClick={() => setIsOpen(false)}
                 >
                   {item.name}

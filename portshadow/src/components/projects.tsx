@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
 interface Project {
   id: number;
@@ -80,7 +81,14 @@ const projects: Project[] = [
     description:
       "A privacy-focused AI system for predicting mental health conditions using encrypted data.",
     image: "/images/Neurex-pic.png?height=600&width=800",
-    tags: ["Next.js", "TypeScript", "Privacy", "Encryption", "Mental Health", "AI ChatBot"],
+    tags: [
+      "Next.js",
+      "TypeScript",
+      "Privacy",
+      "Encryption",
+      "Mental Health",
+      "AI ChatBot",
+    ],
     demoUrl: "#",
     githubUrl: "https://github.com/Davygupta47/Neurex",
     longDescription:
@@ -130,7 +138,7 @@ export default function Projects() {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             My <span className="text-gradient">Projects</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto"></div>
+          <div className="w-20 h-1 bg-gradient-to-r from-blue-600 to-red-600 mx-auto"></div>
           <p className="text-white/70 mt-6 max-w-2xl mx-auto">
             Explore my latest projects showcasing my skills and expertise in web
             development, Machine Learning, and interactive experiences.
@@ -196,15 +204,21 @@ export default function Projects() {
                         <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover/btn:translate-x-1" />
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[600px] bg-black/90 backdrop-blur-md border border-white/20">
+                    <DialogContent
+                      className={cn(
+                        "w-full max-w-lg md:max-w-2xl bg-black/90 backdrop-blur-md border border-white/20 rounded-xl px-6 py-5",
+                        "max-h-[90vh] overflow-y-auto"
+                      )}
+                    >
                       <DialogHeader>
                         <DialogTitle className="text-2xl font-bold text-gradient text-white">
                           {selectedProject?.title}
                         </DialogTitle>
-                        <DialogDescription className="text-white/70">
+                        <DialogDescription className="text-white/70 mt-1">
                           {selectedProject?.longDescription}
                         </DialogDescription>
                       </DialogHeader>
+
                       <div className="mt-4">
                         <h4 className="font-semibold mb-2 text-white">
                           Key Features:
@@ -217,25 +231,30 @@ export default function Projects() {
                           ))}
                         </ul>
                       </div>
-                      <div className="flex justify-end gap-4 mt-6">
-                        <a
-                          href={selectedProject?.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2 text-sm hover:text-blue-400 transition-colors text-white"
-                        >
-                          <Github className="w-4 h-4" />
-                          View Code
-                        </a>
-                        <a
-                          href={selectedProject?.demoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2 text-sm hover:text-blue-400 transition-colors text-white"
-                        >
-                          <ExternalLink className="w-4 h-4" />
-                          Live Demo
-                        </a>
+
+                      <div className="flex flex-col md:flex-row justify-end gap-4 mt-6">
+                        {selectedProject?.githubUrl && (
+                          <a
+                            href={selectedProject.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 text-sm hover:text-blue-400 transition-colors text-white"
+                          >
+                            <Github className="w-4 h-4" />
+                            View Code
+                          </a>
+                        )}
+                        {selectedProject?.demoUrl && (
+                          <a
+                            href={selectedProject.demoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 text-sm hover:text-blue-400 transition-colors text-white"
+                          >
+                            <ExternalLink className="w-4 h-4" />
+                            Live Demo
+                          </a>
+                        )}
                       </div>
                     </DialogContent>
                   </Dialog>

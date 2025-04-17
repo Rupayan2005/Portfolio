@@ -10,7 +10,7 @@ import ParticlesBackground from "@/components/particle-background"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Portfolio | Your Name",
+  title: "Portfolio | Shadow",
   description: "A futuristic portfolio showcasing my work and skills",
 }
 

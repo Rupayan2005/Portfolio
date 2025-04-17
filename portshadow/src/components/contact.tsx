@@ -112,7 +112,7 @@ export default function Contact() {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Get In <span className="text-gradient">Touch</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto"></div>
+          <div className="w-20 h-1 bg-gradient-to-r from-blue-600 to-red-600 mx-auto"></div>
           <p className="text-white/70 mt-6 max-w-2xl mx-auto">
             Have a project in mind or want to collaborate? Feel free to reach
             out to me. I'm always open to discussing new opportunities.

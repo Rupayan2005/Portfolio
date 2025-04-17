@@ -59,7 +59,7 @@ export default function About() {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             About <span className="text-gradient">Me</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto"></div>
+          <div className="w-20 h-1 bg-gradient-to-r from-blue-600 to-red-600 mx-auto"></div>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -76,8 +76,8 @@ export default function About() {
               </div>
 
               {/* Decorative elements */}
-              <div className="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 border-blue-500 rounded-tl-lg"></div>
-              <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 border-purple-500 rounded-br-lg"></div>
+              <div className="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 border-blue-600 rounded-tl-lg"></div>
+              <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 border-red-600 rounded-br-lg"></div>
             </div>
           </motion.div>
 
