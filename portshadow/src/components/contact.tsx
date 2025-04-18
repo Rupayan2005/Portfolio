@@ -154,7 +154,7 @@ export default function Contact() {
 
                 <div className="flex items-start">
                   <div className="p-3 rounded-lg bg-white/5 mr-4">
-                    <MapPin className="w-5 h-5 text-pink-400" />
+                    <MapPin className="w-5 h-5 text-red-400" />
                   </div>
                   <div>
                     <h4 className="font-medium mb-1">Location</h4>
@@ -288,7 +288,7 @@ export default function Contact() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full my-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transform transition duration-300 hover:-translate-y-1 hover:scale-105 shadow-md hover:shadow-2xl"
+                className="w-full my-2 bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-700 hover:to-orange-600 text-white transform transition duration-300 hover:-translate-y-1 hover:scale-105 shadow-md hover:shadow-2xl"
               >
                 {isSubmitting ? (
                   <span className="flex items-center">

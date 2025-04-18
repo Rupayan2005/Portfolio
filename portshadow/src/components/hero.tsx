@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { TypeAnimation } from "react-type-animation";
-import { Button } from "@/components/ui/button";
 import { ColourfulText } from "@/components/ui/colourful-text";
 
 export default function Hero() {

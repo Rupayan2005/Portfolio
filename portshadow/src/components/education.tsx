@@ -19,14 +19,15 @@ import { Badge } from "@/components/ui/badge";
 const educationData = [
   {
     id: 1,
-    level: "Class 10",
-    school: "Baranagar Ramkrishna Mission Ashrama High School(H.S)",
-    board: "WBBSE Board",
-    year: "2021",
-    percentage: "86%",
-    location: "Baranagar, Kolkata",
-    color: "from-purple-500 to-blue-500",
-    icon: <BookOpen className="h-6 w-6" />,
+    level: "Bachelor's in Technology",
+    school: "Heritage Institute of Technology",
+    board: "Computer Science & Engineering(AI/ML)",
+    year: "2023 - Present",
+    percentage: "Current CGPA: 9.2",
+    location: "Kolkata, India",
+    color: "from-cyan-500 to-purple-500",
+    icon: <GraduationCap className="h-6 w-6" />,
+    current: true,
   },
   {
     id: 2,
@@ -41,15 +42,14 @@ const educationData = [
   },
   {
     id: 3,
-    level: "Bachelor's in Technology",
-    school: "Heritage Institute of Technology",
-    board: "Computer Science & Engineering(AI/ML)",
-    year: "2023 - Present",
-    percentage: "Current CGPA: 9.2",
-    location: "Kolkata, India",
-    color: "from-cyan-500 to-purple-500",
-    icon: <GraduationCap className="h-6 w-6" />,
-    current: true,
+    level: "Class 10",
+    school: "Baranagar Ramkrishna Mission Ashrama High School(H.S)",
+    board: "WBBSE Board",
+    year: "2021",
+    percentage: "86%",
+    location: "Baranagar, Kolkata",
+    color: "from-purple-500 to-blue-500",
+    icon: <BookOpen className="h-6 w-6" />,
   },
 ];
 
@@ -193,7 +193,7 @@ function EducationCard({
         className="relative z-10"
       >
         <div
-          className={`w-8 h-8 rounded-full bg-gradient-to-r ${education.color} flex items-center justify-center`}
+          className={`w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-red-500 flex items-center justify-center`}
         >
           <div className="w-3 h-3 rounded-full bg-white"></div>
         </div>
@@ -215,7 +215,7 @@ function EducationCard({
 
         <div className="p-6 relative overflow-hidden">
           <div
-            className={`absolute -inset-1 bg-gradient-to-r ${education.color} opacity-20 blur-xl rounded-full`}
+            className={`absolute -inset-1 bg-gradient-to-r from-blue-500 to-red-500/50 opacity-20 blur-xl rounded-full`}
           ></div>
 
           <div className="flex items-center gap-4 mb-4 relative">
@@ -229,7 +229,7 @@ function EducationCard({
               <p className="text-gray-400">{education.school}</p>
             </div>
             {education.current && (
-              <Badge className="absolute -right-1 -top-6 bg-gradient-to-r from-purple-500 to-blue-500 text-white border-none">
+              <Badge className="absolute -right-1 -top-6 bg-gradient-to-r from-cyan-500 to-blue-900 text-white border-none">
                 <Sparkles className="h-3 w-3 mr-1" /> Current
               </Badge>
             )}
@@ -256,7 +256,7 @@ function EducationCard({
             </div>
             {education.current && (
               <motion.div
-                className="mt-4 p-3 rounded-lg bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-white/10"
+                className="mt-4 p-3 rounded-lg bg-gradient-to-r from-blue-500/20 to-red-500/20 border border-white/10"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -269,8 +269,8 @@ function EducationCard({
             )}
           </div>
 
-          <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-gradient-to-r from-purple-500/10 to-blue-500/10 blur-xl"></div>
-          <div className="absolute -top-6 -left-6 w-16 h-16 rounded-full bg-gradient-to-r from-cyan-500/10 to-purple-500/10 blur-lg"></div>
+          <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-gradient-to-r from-red-600 to-blue-500/20 blur-xl"></div>
+          <div className="absolute -top-6 -left-6 w-16 h-16 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 blur-lg"></div>
         </div>
       </motion.div>
 
