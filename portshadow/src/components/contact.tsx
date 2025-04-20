@@ -147,7 +147,7 @@ export default function Contact() {
                   <div>
                     <h4 className="font-medium mb-1">Phone</h4>
                     <a className="text-white/70 transition-colors">
-                      +91 123-456-7890
+                      +91 6289773419
                     </a>
                   </div>
                 </div>
