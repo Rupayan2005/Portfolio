@@ -63,7 +63,6 @@ export default function Hero() {
       ref={heroRef}
       className="relative min-h-screen flex flex-col justify-center items-center pt-20 pb-8 overflow-hidden"
     >
-
       {/* Subtle ambient lighting */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
@@ -75,7 +74,6 @@ export default function Hero() {
         animate="visible"
         className="relative z-10 max-w-7xl mx-auto px-6 text-center"
       >
-        
         {/* Main Heading - Ultra Modern */}
         <motion.div variants={itemVariants} className="mb-8">
           <motion.h1
@@ -103,7 +101,6 @@ export default function Hero() {
               className="relative inline-block"
             >
               <ColourfulText text="Rupayan Auddya" />
-
             </motion.div>
           </motion.h1>
         </motion.div>
@@ -235,7 +232,7 @@ export default function Hero() {
           duration: 0.8,
           delay: 1.5,
         }}
-        className="absolute bottom-8 md:hidden left-1/2 transform -translate-x-1/2"
+        className="mt-auto pt-8 md:hidden flex justify-center"
       >
         <motion.a
           href="#about"
