@@ -87,21 +87,17 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              // Scroll Animation Observer - Bidirectional support
+              // Scroll Animation Observer - One-directional (stays visible once shown)
               function initScrollAnimations() {
                 const observer = new IntersectionObserver((entries) => {
                   entries.forEach((entry) => {
-                    // Bidirectional scrolling: add/remove visible class based on visibility
                     if (entry.isIntersecting) {
                       entry.target.classList.add('visible');
-                    } else {
-                      // Remove visible class when element is out of view for reverse animation
-                      entry.target.classList.remove('visible');
                     }
                   });
                 }, {
-                  threshold: 0.15,
-                  rootMargin: '0px 0px -10% 0px'
+                  threshold: 0.05,
+                  rootMargin: '0px 0px -5% 0px'
                 });
                 
                 // Observe all elements with animation classes

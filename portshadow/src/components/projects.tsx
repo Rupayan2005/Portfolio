@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import Image from "next/image";
 import {
@@ -231,10 +231,7 @@ const projects: Project[] = [
       "OpenCV",
       "Python",
     ],
-    specifications: [
-      "AI/ML",
-      "Gesture Recognition",
-    ],
+    specifications: ["AI/ML", "Gesture Recognition"],
     technologies: [
       "Python",
       "OpenCV",
@@ -465,8 +462,8 @@ function useIsMobile() {
 
 export default function Projects() {
   const [ref, inView] = useInView({
-    triggerOnce: false,
-    threshold: 0.1,
+    triggerOnce: true,
+    threshold: 0.05,
   });
 
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -498,37 +495,15 @@ export default function Projects() {
   const hasMoreProjects = visibleCount < filteredProjects.length;
   const incrementAmount = isMobile ? 3 : 6;
 
-  const handleShowMore = useCallback(() => {
+  const handleShowMore = () => {
     setVisibleCount((prev) =>
       Math.min(prev + incrementAmount, filteredProjects.length),
     );
-  }, [incrementAmount, filteredProjects.length]);
+  };
 
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
-  };
-
-  const projectVariants = {
-    hidden: { opacity: 0, scale: 0.8, y: 40 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 15,
-      },
-    },
-    exit: {
-      opacity: 0,
-      scale: 0.8,
-      y: -40,
-      transition: {
-        duration: 0.2,
-      },
-    },
   };
 
   const filterVariants = {
@@ -543,7 +518,7 @@ export default function Projects() {
   };
 
   return (
-    <section id="projects" className="py-20 relative overflow-hidden">
+    <section className="pt-10 pb-20 relative overflow-hidden">
       {/* Animated background */}
       <div className="absolute inset-0 grid-background"></div>
       <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
@@ -700,264 +675,255 @@ export default function Projects() {
         </motion.div>
 
         {/* Projects Grid */}
-        <motion.div
-          layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          style={{ willChange: "auto" }}
-        >
-          <AnimatePresence mode="popLayout">
-            {visibleProjects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                variants={projectVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                layout
-                transition={{ delay: index * 0.1 }}
-                className="group relative"
-              >
-                <div className="relative bg-gradient-to-br from-black/40 to-black/60 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/20 h-full flex flex-col">
-                  {/* Status Badge */}
-                  <div className="absolute top-4 left-4 z-10">
-                    <Badge
-                      variant="outline"
-                      className={cn(
-                        "text-xs font-medium backdrop-blur-md",
-                        project.status === "completed"
-                          ? "bg-green-500/20 border-green-500/30 text-green-400"
-                          : project.status === "In-progress"
-                            ? "bg-yellow-500/20 border-yellow-500/30 text-yellow-400"
-                            : "bg-blue-500/20 border-blue-500/30 text-blue-400",
-                      )}
-                    >
-                      {project.status === "completed"
-                        ? "✨ Completed"
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {visibleProjects.map((project, index) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.4,
+                delay: index < (isMobile ? 3 : 6) ? index * 0.1 : 0.1,
+              }}
+              className="group relative"
+            >
+              <div className="relative bg-gradient-to-br from-black/40 to-black/60 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/20 h-full flex flex-col">
+                {/* Status Badge */}
+                <div className="absolute top-4 left-4 z-10">
+                  <Badge
+                    variant="outline"
+                    className={cn(
+                      "text-xs font-medium backdrop-blur-md",
+                      project.status === "completed"
+                        ? "bg-green-500/20 border-green-500/30 text-green-400"
                         : project.status === "In-progress"
-                          ? "🚀 In Progress"
-                          : "💡 Planning"}
-                    </Badge>
-                  </div>
+                          ? "bg-yellow-500/20 border-yellow-500/30 text-yellow-400"
+                          : "bg-blue-500/20 border-blue-500/30 text-blue-400",
+                    )}
+                  >
+                    {project.status === "completed"
+                      ? "✨ Completed"
+                      : project.status === "In-progress"
+                        ? "🚀 In Progress"
+                        : "💡 Planning"}
+                  </Badge>
+                </div>
 
-                  {/* Year Badge */}
-                  <div className="absolute top-4 right-4 z-10">
-                    <Badge
-                      variant="outline"
-                      className="bg-black/40 border-white/20 text-white/80 backdrop-blur-md"
+                {/* Year Badge */}
+                <div className="absolute top-4 right-4 z-10">
+                  <Badge
+                    variant="outline"
+                    className="bg-black/40 border-white/20 text-white/80 backdrop-blur-md"
+                  >
+                    {project.year}
+                  </Badge>
+                </div>
+
+                {/* Project Image */}
+                <div className="relative overflow-hidden aspect-video">
+                  <Image
+                    src={project.image || "/placeholder.svg"}
+                    alt={project.title}
+                    width={800}
+                    height={600}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+
+                  {/* Hover overlay with quick actions */}
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-4">
+                    <motion.a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="p-3 bg-white/10 backdrop-blur-md rounded-full hover:bg-white/20 transition-colors border border-white/20"
                     >
-                      {project.year}
-                    </Badge>
-                  </div>
-
-                  {/* Project Image */}
-                  <div className="relative overflow-hidden aspect-video">
-                    <Image
-                      src={project.image || "/placeholder.svg"}
-                      alt={project.title}
-                      width={800}
-                      height={600}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-
-                    {/* Hover overlay with quick actions */}
-                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-4">
+                      <Github className="w-5 h-5" />
+                    </motion.a>
+                    {project.demoUrl && (
                       <motion.a
-                        href={project.githubUrl}
+                        href={project.demoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        whileHover={{ scale: 1.1, rotate: -5 }}
                         whileTap={{ scale: 0.9 }}
                         className="p-3 bg-white/10 backdrop-blur-md rounded-full hover:bg-white/20 transition-colors border border-white/20"
                       >
-                        <Github className="w-5 h-5" />
+                        <ExternalLink className="w-5 h-5" />
                       </motion.a>
-                      {project.demoUrl && (
-                        <motion.a
-                          href={project.demoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          whileHover={{ scale: 1.1, rotate: -5 }}
-                          whileTap={{ scale: 0.9 }}
-                          className="p-3 bg-white/10 backdrop-blur-md rounded-full hover:bg-white/20 transition-colors border border-white/20"
-                        >
-                          <ExternalLink className="w-5 h-5" />
-                        </motion.a>
-                      )}
-                    </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Project Content */}
+                <div className="p-6 flex flex-col flex-grow">
+                  <h3 className="text-xl font-bold mb-3 text-white group-hover:text-blue-400 transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="text-white/70 mb-4 flex-grow leading-relaxed">
+                    {project.description}
+                  </p>
+
+                  {/* Specifications */}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {project.specifications.map((spec, index) => (
+                      <Badge
+                        key={index}
+                        variant="outline"
+                        className="text-xs bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-blue-500/30 text-blue-400 hover:border-blue-400/50 transition-colors"
+                      >
+                        <Star className="w-3 h-3 mr-1" />
+                        {spec}
+                      </Badge>
+                    ))}
                   </div>
 
-                  {/* Project Content */}
-                  <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="text-xl font-bold mb-3 text-white group-hover:text-blue-400 transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-white/70 mb-4 flex-grow leading-relaxed">
-                      {project.description}
-                    </p>
+                  {/* Technologies */}
+                  <div className="flex flex-wrap gap-1 mb-6">
+                    {project.tags.slice(0, 4).map((tag, index) => (
+                      <span
+                        key={index}
+                        className="text-xs px-2 py-1 rounded-full bg-white/5 text-white/60 border border-white/10"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                    {project.tags.length > 4 && (
+                      <span className="text-xs px-2 py-1 rounded-full bg-white/5 text-white/60 border border-white/10">
+                        +{project.tags.length - 4}
+                      </span>
+                    )}
+                  </div>
 
-                    {/* Specifications */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.specifications.map((spec, index) => (
-                        <Badge
-                          key={index}
-                          variant="outline"
-                          className="text-xs bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-blue-500/30 text-blue-400 hover:border-blue-400/50 transition-colors"
-                        >
-                          <Star className="w-3 h-3 mr-1" />
-                          {spec}
-                        </Badge>
-                      ))}
-                    </div>
+                  {/* View Details Button */}
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="w-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 backdrop-blur-md border border-blue-500/30 rounded-xl py-3 px-4 text-white font-medium transition-all duration-300 flex items-center justify-center gap-2 group/btn"
+                        onClick={() => setSelectedProject(project)}
+                      >
+                        <Code className="w-4 h-4" />
+                        View Details
+                        <ChevronRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                      </motion.button>
+                    </DialogTrigger>
 
-                    {/* Technologies */}
-                    <div className="flex flex-wrap gap-1 mb-6">
-                      {project.tags.slice(0, 4).map((tag, index) => (
-                        <span
-                          key={index}
-                          className="text-xs px-2 py-1 rounded-full bg-white/5 text-white/60 border border-white/10"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                      {project.tags.length > 4 && (
-                        <span className="text-xs px-2 py-1 rounded-full bg-white/5 text-white/60 border border-white/10">
-                          +{project.tags.length - 4}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* View Details Button */}
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <motion.button
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          className="w-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 backdrop-blur-md border border-blue-500/30 rounded-xl py-3 px-4 text-white font-medium transition-all duration-300 flex items-center justify-center gap-2 group/btn"
-                          onClick={() => setSelectedProject(project)}
-                        >
-                          <Code className="w-4 h-4" />
-                          View Details
-                          <ChevronRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-                        </motion.button>
-                      </DialogTrigger>
-
-                      {/* Enhanced Dialog */}
-                      <DialogContent className="w-full max-w-4xl bg-black/95 backdrop-blur-xl border border-white/20 rounded-2xl p-8 max-h-[90vh] overflow-y-auto">
-                        <DialogHeader className="space-y-4">
-                          <div className="flex items-start justify-between">
-                            <div className="flex-1">
-                              <DialogTitle className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mb-2">
-                                {selectedProject?.title}
-                              </DialogTitle>
-                              <div className="flex items-center gap-3 mb-4">
-                                <Badge
-                                  variant="outline"
-                                  className={cn(
-                                    "backdrop-blur-md",
-                                    selectedProject?.status === "completed"
-                                      ? "bg-green-500/20 border-green-500/30 text-green-400"
-                                      : selectedProject?.status ===
-                                          "In-progress"
-                                        ? "bg-yellow-500/20 border-yellow-500/30 text-yellow-400"
-                                        : "bg-blue-500/20 border-blue-500/30 text-blue-400",
-                                  )}
-                                >
-                                  {selectedProject?.year}
-                                </Badge>
-                                <Badge
-                                  variant="outline"
-                                  className="bg-black/40 border-white/20 text-white/80"
-                                >
-                                  {selectedProject?.status}
-                                </Badge>
-                              </div>
-                            </div>
-                          </div>
-                          <DialogDescription className="text-white/80 text-lg leading-relaxed">
-                            {selectedProject?.longDescription}
-                          </DialogDescription>
-                        </DialogHeader>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-                          {/* Features */}
-                          <div>
-                            <h4 className="font-semibold mb-4 text-white flex items-center gap-2">
-                              <Star className="w-5 h-5 text-yellow-400" />
-                              Key Features
-                            </h4>
-                            <ul className="space-y-3">
-                              {selectedProject?.features.map(
-                                (feature, index) => (
-                                  <li
-                                    key={index}
-                                    className="text-white/80 flex items-start gap-2"
-                                  >
-                                    <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
-                                    {feature}
-                                  </li>
-                                ),
-                              )}
-                            </ul>
-                          </div>
-
-                          {/* Technologies */}
-                          <div>
-                            <h4 className="font-semibold mb-4 text-white flex items-center gap-2">
-                              <Code className="w-5 h-5 text-green-400" />
-                              Technologies Used
-                            </h4>
-                            <div className="flex flex-wrap gap-2">
-                              {selectedProject?.technologies.map(
-                                (tech, index) => (
-                                  <Badge
-                                    key={index}
-                                    variant="outline"
-                                    className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border-green-500/30 text-green-400"
-                                  >
-                                    {tech}
-                                  </Badge>
-                                ),
-                              )}
+                    {/* Enhanced Dialog */}
+                    <DialogContent className="w-full max-w-4xl bg-black/95 backdrop-blur-xl border border-white/20 rounded-2xl p-8 max-h-[90vh] overflow-y-auto">
+                      <DialogHeader className="space-y-4">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <DialogTitle className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mb-2">
+                              {selectedProject?.title}
+                            </DialogTitle>
+                            <div className="flex items-center gap-3 mb-4">
+                              <Badge
+                                variant="outline"
+                                className={cn(
+                                  "backdrop-blur-md",
+                                  selectedProject?.status === "completed"
+                                    ? "bg-green-500/20 border-green-500/30 text-green-400"
+                                    : selectedProject?.status === "In-progress"
+                                      ? "bg-yellow-500/20 border-yellow-500/30 text-yellow-400"
+                                      : "bg-blue-500/20 border-blue-500/30 text-blue-400",
+                                )}
+                              >
+                                {selectedProject?.year}
+                              </Badge>
+                              <Badge
+                                variant="outline"
+                                className="bg-black/40 border-white/20 text-white/80"
+                              >
+                                {selectedProject?.status}
+                              </Badge>
                             </div>
                           </div>
                         </div>
+                        <DialogDescription className="text-white/80 text-lg leading-relaxed">
+                          {selectedProject?.longDescription}
+                        </DialogDescription>
+                      </DialogHeader>
 
-                        {/* Action Buttons */}
-                        <div className="flex flex-col sm:flex-row justify-end gap-4 mt-8 pt-6 border-t border-white/10">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                        {/* Features */}
+                        <div>
+                          <h4 className="font-semibold mb-4 text-white flex items-center gap-2">
+                            <Star className="w-5 h-5 text-yellow-400" />
+                            Key Features
+                          </h4>
+                          <ul className="space-y-3">
+                            {selectedProject?.features.map((feature, index) => (
+                              <li
+                                key={index}
+                                className="text-white/80 flex items-start gap-2"
+                              >
+                                <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
+                                {feature}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        {/* Technologies */}
+                        <div>
+                          <h4 className="font-semibold mb-4 text-white flex items-center gap-2">
+                            <Code className="w-5 h-5 text-green-400" />
+                            Technologies Used
+                          </h4>
+                          <div className="flex flex-wrap gap-2">
+                            {selectedProject?.technologies.map(
+                              (tech, index) => (
+                                <Badge
+                                  key={index}
+                                  variant="outline"
+                                  className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border-green-500/30 text-green-400"
+                                >
+                                  {tech}
+                                </Badge>
+                              ),
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Action Buttons */}
+                      <div className="flex flex-col sm:flex-row justify-end gap-4 mt-8 pt-6 border-t border-white/10">
+                        <motion.a
+                          href={selectedProject?.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-600/20 to-gray-700/20 hover:from-gray-600/30 hover:to-gray-700/30 backdrop-blur-md border border-gray-500/30 rounded-xl text-white font-medium transition-all duration-300"
+                        >
+                          <Github className="w-5 h-5" />
+                          View Source Code
+                        </motion.a>
+                        {selectedProject?.demoUrl && (
                           <motion.a
-                            href={selectedProject?.githubUrl}
+                            href={selectedProject.demoUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-600/20 to-gray-700/20 hover:from-gray-600/30 hover:to-gray-700/30 backdrop-blur-md border border-gray-500/30 rounded-xl text-white font-medium transition-all duration-300"
+                            className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 backdrop-blur-md border border-blue-500/30 rounded-xl text-white font-medium transition-all duration-300"
                           >
-                            <Github className="w-5 h-5" />
-                            View Source Code
+                            <Globe className="w-5 h-5" />
+                            View Live Demo
                           </motion.a>
-                          {selectedProject?.demoUrl && (
-                            <motion.a
-                              href={selectedProject.demoUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 backdrop-blur-md border border-blue-500/30 rounded-xl text-white font-medium transition-all duration-300"
-                            >
-                              <Globe className="w-5 h-5" />
-                              View Live Demo
-                            </motion.a>
-                          )}
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-                  </div>
+                        )}
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
 
         {/* Show More Button */}
         {hasMoreProjects && (
