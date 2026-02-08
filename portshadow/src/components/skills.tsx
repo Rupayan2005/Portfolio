@@ -1,9 +1,23 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import Image from "next/image"
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { useInView } from "react-intersection-observer";
-import { Code, Layout, Server, Cloud, Database, BarChart3, Brain, Wrench } from "lucide-react"
+import {
+  Code,
+  Layout,
+  Server,
+  Cloud,
+  Database,
+  BarChart3,
+  Brain,
+  Wrench,
+  ChevronDown,
+  ChevronUp,
+  Sparkles,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 // Define the Skill type
 type Skill = {
@@ -111,7 +125,7 @@ const skillCategories = [
       { name: "Figma", logoPath: "/images/figma.png" },
     ],
   },
-]
+];
 
 export default function Skills() {
   const [ref, inView] = useInView({
@@ -119,8 +133,18 @@ export default function Skills() {
     threshold: 0.1,
   });
 
+  const [expandedCategories, setExpandedCategories] = useState<
+    Record<string, boolean>
+  >({});
 
-  const skillGradient = "from-blue-600 to-red-600"
+  const toggleCategory = (categoryId: string) => {
+    setExpandedCategories((prev) => ({
+      ...prev,
+      [categoryId]: !prev[categoryId],
+    }));
+  };
+
+  const skillGradient = "from-blue-600 via-purple-600 to-red-600";
 
   const fadeInVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -128,12 +152,36 @@ export default function Skills() {
   };
 
   return (
-    <section id="skills" className="py-20 relative overflow-hidden">
-      {/* Background */}
+    <section id="skills" className="py-24 relative overflow-hidden">
+      {/* Enhanced Background */}
       <div className="absolute inset-0 grid-background opacity-20"></div>
-      <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-blue-600/10 blur-3xl"></div>
-      <div className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-red-600/10 blur-3xl"></div>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-cyan-500/10 blur-3xl"></div>
+
+      {/* Ambient lighting effects */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-700" />
+
+      {/* Floating particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(15)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-blue-400/30 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              opacity: [0.2, 0.8, 0.2],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
+      </div>
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
@@ -144,93 +192,173 @@ export default function Skills() {
             hidden: {},
             visible: {
               transition: {
-                staggerChildren: 0.2,
+                staggerChildren: 0.15,
               },
             },
           }}
-          className="max-w-6xl mx-auto"
+          className="max-w-7xl mx-auto"
         >
-          {/* Header */}
-          <motion.div variants={fadeInVariants} className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">Technical Expertise</h2>
-            <div className={`w-20 h-1 bg-gradient-to-r ${skillGradient} mx-auto`}></div>
-            <p className="text-white/70 mt-6 max-w-2xl mx-auto">
-              A comprehensive overview of my technical skills across various domains of software development
+          {/* Ultra-modern Header */}
+          <motion.div variants={fadeInVariants} className="text-center mb-20">
+
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight">
+              My{" "}
+              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-red-400 bg-clip-text text-transparent">
+                Skills
+              </span>
+            </h2>
+            <div
+              className={`w-24 h-1 bg-gradient-to-r ${skillGradient} mx-auto rounded-full`}
+            ></div>
+            <p className="text-white/60 mt-8 max-w-2xl mx-auto text-lg leading-relaxed">
+              A comprehensive overview of my technical expertise across various
+              domains of software development
             </p>
           </motion.div>
 
-          {/* Skills Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            {skillCategories.map((category, index) => (
-              <motion.div
-                key={category.id}
-                variants={fadeInVariants}
-                className="glass-effect rounded-2xl overflow-hidden"
-                whileHover={{
-                  scale: 1.02,
-                  boxShadow: "0 0 30px rgba(59, 130, 246, 0.3)", // blue glow
-                }}
-              >
-                <div className="p-6 relative">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className={`p-3 rounded-xl bg-gradient-to-r from-blue-600 to-black text-white`}>
-                      {category.icon}
+          {/* Skills Grid - Mobile Friendly */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {skillCategories.map((category, index) => {
+              const isExpanded = expandedCategories[category.id];
+              const visibleSkills = isExpanded
+                ? category.skills
+                : category.skills.slice(0, 3);
+              const hasMore = category.skills.length > 3;
+
+              return (
+                <motion.div
+                  key={category.id}
+                  variants={fadeInVariants}
+                  className="relative glass rounded-2xl border border-blue-500/20 overflow-hidden group"
+                  whileHover={{ y: -5 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {/* Animated gradient background on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  {/* Glow effect */}
+                  <div
+                    className={`absolute -inset-1 bg-gradient-to-r ${category.color} rounded-2xl blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-500`}
+                  />
+
+                  <div className="p-6 md:p-8 relative z-10">
+                    {/* Category Header */}
+                    <div className="flex items-center gap-4 mb-6">
+                      <motion.div
+                        className={`p-3 rounded-xl bg-gradient-to-r ${category.color} text-white shadow-lg`}
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.6 }}
+                      >
+                        {category.icon}
+                      </motion.div>
+                      <div>
+                        <h3 className="text-xl md:text-2xl font-bold text-white/90">
+                          {category.name}
+                        </h3>
+                        <p className="text-sm text-white/50">
+                          {category.skills.length} technologies
+                        </p>
+                      </div>
                     </div>
-                    <h3 className="text-xl font-bold">{category.name}</h3>
-                  </div>
 
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    {category.skills.map((skill) => (
-                      <SkillCard key={skill.name} skill={skill} />
-                    ))}
-                  </div>
+                    {/* Skills Grid */}
+                    <div className="grid grid-cols-3 gap-3 md:gap-4 mb-4">
+                      <AnimatePresence mode="popLayout">
+                        {visibleSkills.map((skill, skillIndex) => (
+                          <SkillCard
+                            key={skill.name}
+                            skill={skill}
+                            index={skillIndex}
+                            categoryColor={category.color}
+                          />
+                        ))}
+                      </AnimatePresence>
+                    </div>
 
-                  {/* Glow background */}
-                  <div className={`absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-gradient-to-r ${skillGradient} opacity-10 blur-2xl`} />
-                </div>
-              </motion.div>
-            ))}
+                    {/* Show More/Less Button */}
+                    {hasMore && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.3 }}
+                      >
+                        <Button
+                          onClick={() => toggleCategory(category.id)}
+                          variant="outline"
+                          className="w-full mt-2 bg-white/5 border-blue-500/20 hover:bg-white/10 hover:border-blue-500/40 text-white/80 hover:text-white transition-all duration-300 rounded-xl group/btn"
+                        >
+                          <span className="flex items-center justify-center gap-2">
+                            {isExpanded ? (
+                              <>
+                                Show Less
+                                <ChevronUp className="w-4 h-4 group-hover/btn:animate-bounce" />
+                              </>
+                            ) : (
+                              <>
+                                Show {category.skills.length - 3} More
+                                <ChevronDown className="w-4 h-4 group-hover/btn:animate-bounce" />
+                              </>
+                            )}
+                          </span>
+                        </Button>
+                      </motion.div>
+                    )}
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
 
-function SkillCard({ skill }: { skill: Skill }) {
-  const fadeInVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  };
-
+function SkillCard({
+  skill,
+  index,
+  categoryColor,
+}: {
+  skill: Skill;
+  index: number;
+  categoryColor: string;
+}) {
   return (
     <motion.div
-      variants={fadeInVariants}
-      className="relative group"
-      whileHover={{ scale: 1.05 }}
-      transition={{ duration: 0.2 }}
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.8 }}
+      transition={{
+        duration: 0.3,
+        delay: index * 0.05,
+      }}
+      className="relative group/card"
+      whileHover={{ scale: 1.05, y: -5 }}
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-red-500/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-md" />
+      {/* Glow effect on hover */}
+      <div
+        className={`absolute -inset-1 bg-gradient-to-r ${categoryColor} rounded-xl opacity-0 group-hover/card:opacity-30 blur-md transition-opacity duration-300`}
+      />
 
-      <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center aspect-square relative overflow-hidden">
-        <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4 overflow-hidden group-hover:ring-2 group-hover:ring-blue-500/50 transition-all duration-300">
+      <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-3 md:p-4 flex flex-col items-center justify-center aspect-square overflow-hidden group-hover/card:bg-white/10 group-hover/card:border-blue-500/30 transition-all duration-300">
+        {/* Logo container */}
+        <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/10 flex items-center justify-center mb-2 md:mb-3 overflow-hidden group-hover/card:ring-2 group-hover/card:ring-blue-400/50 group-hover/card:shadow-lg group-hover/card:shadow-blue-500/20 transition-all duration-300">
           <Image
             src={skill.logoPath || "/placeholder.svg"}
             alt={`${skill.name} logo`}
             width={40}
             height={40}
-            className="object-contain"
+            className="object-contain transition-transform duration-300 group-hover/card:scale-110"
           />
         </div>
 
         {/* Skill name */}
-        <span className="text-sm font-medium text-center text-gray-300 group-hover:text-white transition-colors duration-300">
+        <span className="text-xs md:text-sm font-medium text-center text-white/70 group-hover/card:text-white transition-colors duration-300 line-clamp-2">
           {skill.name}
         </span>
+
+        {/* Animated corner accent */}
+        <div className="absolute top-0 right-0 w-8 h-8 bg-gradient-to-br from-blue-500/20 to-transparent rounded-bl-lg opacity-0 group-hover/card:opacity-100 transition-opacity duration-300" />
       </div>
     </motion.div>
   );
