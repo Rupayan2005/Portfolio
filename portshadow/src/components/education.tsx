@@ -11,9 +11,7 @@ import {
   MapPin,
   Sparkles,
 } from "lucide-react";
-import RotatingCube from "@/components/rotating-cube";
 import { useInView } from "react-intersection-observer";
-import ParticleWave from "@/components/particle-wave";
 import { Badge } from "@/components/ui/badge";
 
 const educationData = [
@@ -35,7 +33,7 @@ const educationData = [
     school: "Baranagar Ramkrishna Mission Ashrama High School(H.S)",
     board: "WBCHSE Board",
     year: "2023",
-    percentage: "87.4%",
+    percentage: "Percentage: 87.4%",
     location: "Baranagar, Kolkata",
     color: "from-blue-500 to-cyan-500",
     icon: <Award className="h-6 w-6" />,
@@ -46,7 +44,7 @@ const educationData = [
     school: "Baranagar Ramkrishna Mission Ashrama High School(H.S)",
     board: "WBBSE Board",
     year: "2021",
-    percentage: "86%",
+    percentage: "Percentage: 86%",
     location: "Baranagar, Kolkata",
     color: "from-purple-500 to-blue-500",
     icon: <BookOpen className="h-6 w-6" />,
@@ -64,29 +62,34 @@ export default function Education() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.3,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const fadeIn = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
       },
     },
   };
 
   return (
-    <section id="education" className="py-20 relative overflow-hidden">
-      <div className="absolute inset-0 grid-background opacity-30"></div>
-      <RotatingCube
-        position="top-right"
-        size={80}
-        color="rgba(100, 20, 20, 0.15)"
-        glowColor="rgba(168, 85, 247, 0.3)"
-      />
-      <RotatingCube
-        position="bottom-left"
-        size={100}
-        color="rgba(20, 30, 60, 0.15)"
-        glowColor="rgba(59, 130, 246, 0.3)"
-        rotationSpeed={25}
-      />
+    <section id="education" className="py-24 relative overflow-hidden">
+      {/* Clean modern background */}
+      <div className="absolute inset-0"></div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      {/* Ambient lighting */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/3 rounded-full blur-3xl" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/3 rounded-full blur-3xl" />
+
+      <div className="container mx-auto px-6 relative z-10 max-w-7xl">
         <motion.div
           ref={ref}
           variants={containerVariants}
@@ -94,32 +97,30 @@ export default function Education() {
           animate={inView ? "visible" : "hidden"}
           className="max-w-6xl mx-auto"
         >
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
-              Academic Journey
+          {/* Ultra-modern section header */}
+          <motion.div variants={fadeIn} className="text-center mb-20">
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight">
+              Academic <span className="bg-clip-text text-white">Journey</span>
             </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-blue-600 to-red-600 mx-auto"></div>
-            <p className="text-white/70 mt-4 max-w-2xl mx-auto">
+
+            {/* Enhanced decorative line */}
+            <div className="relative w-32 h-1 mx-auto mb-6">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-500 to-cyan-600 rounded-full"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 rounded-full blur-sm"></div>
+            </div>
+
+            <p className="text-white/70 text-lg max-w-3xl mx-auto leading-relaxed">
               Exploring the path of knowledge and growth through formal
-              education and continuous learning
+              education and continuous learning in technology and innovation
             </p>
           </motion.div>
 
-          <div className="mb-16">
-            <ParticleWave height={80} color="rgba(168, 85, 247, 0.4)" />
-          </div>
-
+          {/* Modern timeline container */}
           <div className="relative">
-            <div
-              className="absolute md:left-1/2 transform md:-translate-x-1/2 h-full w-1 bg-gradient-to-b from-blue-600 to-red-600 rounded-full"
-            ></div>
+            {/* Enhanced timeline line */}
+            <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-1 rounded-full bg-gradient-to-b from-blue-500 via-purple-500 to-cyan-500 shadow-lg shadow-blue-500/20"></div>
 
-            <div className="flex flex-col gap-24">
+            <div className="space-y-16">
               {educationData.map((education, index) => (
                 <EducationCard
                   key={education.id}
@@ -129,10 +130,6 @@ export default function Education() {
                 />
               ))}
             </div>
-          </div>
-
-          <div className="mt-16">
-            <ParticleWave height={80} color="rgba(34, 211, 238, 0.4)" />
           </div>
         </motion.div>
       </div>
@@ -167,8 +164,8 @@ function EducationCard({
   const cardVariants = {
     hidden: {
       opacity: 0,
-      x: isEven ? -50 : 50,
-      y: 20,
+      x: isEven ? -60 : 60,
+      y: 30,
     },
     visible: {
       opacity: 1,
@@ -177,104 +174,199 @@ function EducationCard({
       transition: {
         duration: 0.8,
         ease: "easeOut",
+        delay: index * 0.2,
       },
     },
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-      {isEven && <div className="hidden md:block md:w-5/12"></div>}
+    <div className="relative flex items-center">
+      {/* Mobile/tablet layout helper */}
+      <div className="flex flex-col md:flex-row items-start md:items-center w-full gap-8">
+        {/* Left spacer for even cards on desktop */}
+        {isEven && <div className="hidden md:block md:w-5/12"></div>}
 
-      {/* Timeline node */}
-      <motion.div
-        initial={{ scale: 0, opacity: 0 }}
-        animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
-        transition={{ delay: 0.2 * index, duration: 0.5 }}
-        className="relative z-10"
-      >
-        <div
-          className={`w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-red-500 flex items-center justify-center`}
+        {/* Timeline node - enhanced */}
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={
+            isInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }
+          }
+          transition={{
+            delay: 0.3 + index * 0.2,
+            duration: 0.6,
+            type: "spring",
+            bounce: 0.3,
+          }}
+          className="relative z-20 flex-shrink-0 -ml-5 md:ml-0"
         >
-          <div className="w-3 h-3 rounded-full bg-white"></div>
-        </div>
-      </motion.div>
+          <div className="relative">
+            {/* Main node */}
+            <div
+              className={`w-12 h-12 rounded-2xl bg-gradient-to-r ${education.color} flex items-center justify-center shadow-lg`}
+            >
+              <div className="text-white">{education.icon}</div>
+            </div>
 
-      <motion.div
-        variants={cardVariants}
-        className={`relative w-full md:w-5/12 glass-effect rounded-2xl overflow-hidden ${
-          education.current ? "pulse-glow" : ""
-        }`}
-      >
-        <div
-          className={`absolute top-1/2 hidden md:block h-1 w-8 bg-gradient-to-r ${
-            isEven
-              ? "from-purple-500 to-transparent left-0 -translate-x-full"
-              : "from-transparent to-purple-500 right-0 translate-x-full"
-          } transform -translate-y-1/2`}
-        ></div>
+            {/* Pulse effect for current education */}
+            {education.current && (
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 animate-pulse opacity-30"></div>
+            )}
 
-        <div className="p-6 relative overflow-hidden">
+            {/* Glow effect */}
+            <div
+              className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${education.color} blur-lg opacity-20`}
+            ></div>
+          </div>
+        </motion.div>
+
+        {/* Education card - ultra-modern design */}
+        <motion.div
+          variants={cardVariants}
+          className={`relative w-full md:w-5/12 group ${
+            education.current ? "ring-2 ring-cyan-400/30" : ""
+          }`}
+        >
+          {/* Connecting line to timeline */}
           <div
-            className={`absolute -inset-1 bg-gradient-to-r from-blue-500 to-red-500/50 opacity-20 blur-xl rounded-full`}
+            className={`absolute top-6 w-8 h-1 rounded-full bg-gradient-to-r ${
+              education.color
+            } hidden md:block ${isEven ? "right-full mr-2" : "left-full ml-2"}`}
           ></div>
 
-          <div className="flex items-center gap-4 mb-4 relative">
-            <div
-              className={`p-3 rounded-xl bg-gradient-to-r ${education.color} text-white`}
-            >
-              {education.icon}
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold">{education.level}</h3>
-              <p className="text-gray-400">{education.school}</p>
-            </div>
+          {/* Main card with glassmorphism */}
+          <div
+            className="relative rounded-3xl p-8 border transition-all duration-500 hover:scale-105 hover:shadow-2xl"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)",
+              backdropFilter: "blur(24px) saturate(150%)",
+              border: "1px solid rgba(255, 255, 255, 0.15)",
+              boxShadow:
+                "0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+            }}
+          >
+            {/* Current badge */}
             {education.current && (
-              <Badge className="absolute -right-1 -top-6 bg-gradient-to-r from-cyan-500 to-blue-900 text-white border-none">
-                <Sparkles className="h-3 w-3 mr-1" /> Current
-              </Badge>
+              <div className="absolute -top-3 -right-3">
+                <Badge
+                  className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white border-none shadow-lg"
+                  style={{
+                    boxShadow: "0 4px 12px rgba(34, 211, 238, 0.3)",
+                  }}
+                >
+                  <Sparkles className="h-3 w-3 mr-1" /> Current
+                </Badge>
+              </div>
             )}
-          </div>
 
-          <div className="space-y-4">
-            <div className="flex flex-col gap-2">
-              <div className="flex items-center gap-2 text-gray-300">
-                <BookOpen className="h-4 w-4 text-purple-400" />
-                <span>{education.board}</span>
+            {/* Header section */}
+            <div className="flex items-start gap-4 mb-6">
+              <div
+                className={`p-4 rounded-2xl bg-gradient-to-r ${education.color} text-white shadow-lg`}
+              >
+                {education.icon}
               </div>
-              <div className="flex items-center gap-2 text-gray-300">
-                <Calendar className="h-4 w-4 text-blue-400" />
-                <span>{education.year}</span>
-              </div>
-              <div className="flex items-center gap-2 text-gray-300">
-                <Percent className="h-4 w-4 text-cyan-400" />
-                <span>{education.percentage}</span>
-              </div>
-              <div className="flex items-center gap-2 text-gray-300">
-                <MapPin className="h-4 w-4 text-purple-400" />
-                <span>{education.location}</span>
+              <div className="flex-1">
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                  {education.level}
+                </h3>
+                <p className="text-white/70 text-lg font-medium">
+                  {education.school}
+                </p>
               </div>
             </div>
+
+            {/* Details grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div
+                className="flex items-center gap-3 p-3 rounded-xl border"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)",
+                  border: "1px solid rgba(255, 255, 255, 0.1)",
+                }}
+              >
+                <BookOpen className="h-5 w-5 text-purple-400 flex-shrink-0" />
+                <span className="text-white/80 text-sm font-medium">
+                  {education.board}
+                </span>
+              </div>
+
+              <div
+                className="flex items-center gap-3 p-3 rounded-xl border"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)",
+                  border: "1px solid rgba(255, 255, 255, 0.1)",
+                }}
+              >
+                <Calendar className="h-5 w-5 text-blue-400 flex-shrink-0" />
+                <span className="text-white/80 text-sm font-medium">
+                  {education.year}
+                </span>
+              </div>
+
+              <div
+                className="flex items-center gap-3 p-3 rounded-xl border"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)",
+                  border: "1px solid rgba(255, 255, 255, 0.1)",
+                }}
+              >
+                <Percent className="h-5 w-5 text-cyan-400 flex-shrink-0" />
+                <span className="text-white/80 text-sm font-medium">
+                  {education.percentage}
+                </span>
+              </div>
+
+              <div
+                className="flex items-center gap-3 p-3 rounded-xl border"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)",
+                  border: "1px solid rgba(255, 255, 255, 0.1)",
+                }}
+              >
+                <MapPin className="h-5 w-5 text-purple-400 flex-shrink-0" />
+                <span className="text-white/80 text-sm font-medium">
+                  {education.location}
+                </span>
+              </div>
+            </div>
+
+            {/* Current focus section */}
             {education.current && (
               <motion.div
-                className="mt-4 p-3 rounded-lg bg-gradient-to-r from-blue-500/20 to-red-500/20 border border-white/10"
+                className="p-4 rounded-2xl border"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%)",
+                  border: "1px solid rgba(59, 130, 246, 0.2)",
+                }}
                 whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
               >
-                <h4 className="text-sm font-semibold mb-1">Current Focus</h4>
-                <p className="text-xs text-gray-400">
+                <h4 className="text-lg font-bold mb-2 text-white">
+                  Current Focus
+                </h4>
+                <p className="text-white/70 text-sm leading-relaxed">
                   Specializing in AI and Machine Learning with a focus on neural
                   networks and deep learning applications.
                 </p>
               </motion.div>
             )}
+
+            {/* Hover glow effect */}
+            <div
+              className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${education.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500 blur-xl`}
+            ></div>
           </div>
+        </motion.div>
 
-          <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-gradient-to-r from-red-600 to-blue-500/20 blur-xl"></div>
-          <div className="absolute -top-6 -left-6 w-16 h-16 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 blur-lg"></div>
-        </div>
-      </motion.div>
-
-      {!isEven && <div className="hidden md:block md:w-6/12"></div>}
+        {/* Right spacer for odd cards on desktop */}
+        {!isEven && <div className="hidden md:block md:w-5/12"></div>}
+      </div>
     </div>
   );
 }
