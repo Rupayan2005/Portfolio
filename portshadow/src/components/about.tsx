@@ -93,13 +93,8 @@ export default function About() {
       >
         {/* Ultra-modern section header */}
         <motion.div variants={fadeIn} className="text-center mb-20">
-          
-
           <h2 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight">
-            About{" "}
-            <span className="text-white bg-clip-text">
-              Me
-            </span>
+            About <span className="text-white bg-clip-text">Me</span>
           </h2>
 
           {/* Enhanced decorative line */}
@@ -115,7 +110,7 @@ export default function About() {
             <div className="relative w-full aspect-square max-w-lg mx-auto">
               {/* Main image container with glassmorphism */}
               <div
-                className="relative rounded-3xl overflow-hidden border"
+                className="relative rounded-3xl overflow-hidden border h-full"
                 style={{
                   background:
                     "linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)",
@@ -130,7 +125,7 @@ export default function About() {
                   alt="Profile"
                   width={500}
                   height={600}
-                  className="object-cover w-full h-full"
+                  className="object-cover object-top w-full h-full"
                 />
 
                 {/* Overlay gradient */}
@@ -227,10 +222,10 @@ export default function About() {
                       tech.color === "red"
                         ? "rgba(239, 68, 68, 0.2)"
                         : tech.color === "blue"
-                        ? "rgba(59, 130, 246, 0.2)"
-                        : tech.color === "yellow"
-                        ? "rgba(245, 158, 11, 0.2)"
-                        : "rgba(34, 197, 94, 0.2)"
+                          ? "rgba(59, 130, 246, 0.2)"
+                          : tech.color === "yellow"
+                            ? "rgba(245, 158, 11, 0.2)"
+                            : "rgba(34, 197, 94, 0.2)"
                     }`,
                   }}
                   whileHover={{ y: -2 }}
@@ -240,10 +235,10 @@ export default function About() {
                       tech.color === "red"
                         ? "bg-red-500"
                         : tech.color === "blue"
-                        ? "bg-blue-500"
-                        : tech.color === "yellow"
-                        ? "bg-yellow-500"
-                        : "bg-green-500"
+                          ? "bg-blue-500"
+                          : tech.color === "yellow"
+                            ? "bg-yellow-500"
+                            : "bg-green-500"
                     } shadow-lg`}
                   />
                   <span className={`font-medium ${tech.textColor}`}>
